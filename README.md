@@ -1,6 +1,6 @@
-MentalGarden 🌿
+# 🌿 MentalGarden
 
-Projenin Kapsamı 🧩
+## 🧩 Projenin Kapsamı
 Bu proje, Google - Yapay Zeka Akademisi kapsamında geliştirilen bir demo çalışmasıdır. İlk aşamada, duygusal paylaşımı ve dijital topluluk hissini destekleyen temel özelliklere odaklanılmıştır.
 Huzurla Sürdürülebilir Bir Hayat İçin GözlemMentalGarden, kullanıcıların duygusal deneyimlerini doğru kelimeleri seçme çabası olmadan kişisel bir günlük tutabilecekleri ve arkadaşlarıyla kolektif bir huzur ortamı yaratabilecekleri sıcak ve destekleyici bir platformdur. Ana gayemiz bireyden başlayıp önce topluma sonra doğaya yayılan bir iyi oluş ortamı oluşturmak.
 Özellikler ✨
