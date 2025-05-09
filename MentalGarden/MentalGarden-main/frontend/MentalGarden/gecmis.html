@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Geçmiş Ruh Halleri</title>
+  <link rel="stylesheet" href="style.css?v=4" />
+  <style>
+    /* Stiller aynı kalabilir (kısmı kestim) */
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="anasayfa.html">
+    <img src="assets/logo.svg" alt="MentalGarden Logo" class="logo">
+  </a>
+  <nav class="navbar">
+    <a href="günlügüm.html">Günlük</a>
+    <a href="bahcem.html">Bahçem</a>
+    <a href="bahcemiz.html">Bahçemiz</a>
+    <a href="gecmis.html">Geçmiş</a>
+    <a href="hakkimizda.html">Hakkımızda</a>
+  </nav>
+  <a href="#" class="profile-btn">
+    <img src="assets/profile-icon.svg" alt="Profil">
+  </a>
+</header>
+  <br>
+<div class="card-header">
+  <h1>Geçmiş Ruh Halleri</h1>
+  <br><br>
+<p>Son 7 gün boyunca kendini nasıl hissettiğini buradan görebilirsin 🌱</p>
+
+</div>
+<main class="container">
+  <div class="mood-grid" id="moodGrid"></div>
+
+  <h2 style="margin-top: 3rem;">📖 Günlük Geçmişi</h2>
+  <div id="journalList" style="text-align:left; max-width:600px; margin:auto; font-size:0.95rem; color:#4b3b3b;"></div>
+</main>
+
+<script>
+  const moodDescriptions = [
+    "Bugün biraz stresli hissediyordum.",
+    "Biraz üzgündüm bugün.",
+    "Ne iyi ne kötü, dengeli bir gündü.",
+    "Kendimi oldukça iyi hissediyordum.",
+    "Bugün çok mutlu hissediyordum!"
+  ];
+
+  function formatDate(isoDate) {
+    const months = [
+      "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+      "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
+    ];
+    const d = new Date(isoDate);
+    return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+  }
+
+  async function loadMoodHistory(username) {
+    const response = await fetch(`http://localhost:8000/mood-history/${username}`);
+    const moodData = await response.json();
+
+    const moodGrid = document.getElementById("moodGrid");
+    moodGrid.innerHTML = "";
+
+    moodData.reverse().forEach(entry => {
+      const card = document.createElement("div");
+      card.className = "mood-card";
+      card.innerHTML = `
+        <p class="mood-date">${formatDate(entry.date)}</p>
+        <img src="assets/tree${entry.mood}.svg" alt="Mood" class="mood-image" />
+        <p class="mood-desc">${moodDescriptions[entry.mood]}</p>
+      `;
+      moodGrid.appendChild(card);
+    });
+  }
+
+  async function loadJournals(username) {
+    const res = await fetch(`http://localhost:8000/journal/${username}`);
+    const data = await res.json();
+
+    const container = document.getElementById("journalList");
+    container.innerHTML = "";
+
+    data.reverse().forEach(entry => {
+      const p = document.createElement("p");
+      p.textContent = `🗓️ ${formatDate(entry.date)}: ${entry.entry}`;
+      container.appendChild(p);
+    });
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const username = localStorage.getItem("username") || "defaultUser";
+    loadMoodHistory(username);
+    loadJournals(username);
+  });
+</script>
+
+</body>
+</html>
